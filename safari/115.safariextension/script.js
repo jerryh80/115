@@ -116,66 +116,35 @@ var pan_115 = function(cookies) {
 
             }
         };
-        var css = function() {/*
-        @media (min-width: 1240px){
-            .btn-aria2c{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 80px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
-            .btn-txt{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 10px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
+         var css = function() {/*
+        .btn-aria2c{
+            position: relative;
+            top:2px;
+            float: right;
+            margin-right: 10px;
+            margin-left: 10px;
+            padding: 0 10px 0 10px;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            background: #2b91e3;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index:100;
         }
-        @media (max-width: 1000px){
-            .btn-aria2c{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 20px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
-            .btn-txt{
-                position: relative;
-                top: 8px;
-                float: right;
-                margin-right: 10px;
-                padding: 0 10px 0 10px;
-                line-height: 30px;
-                font-size: 14px;
-                color: white;
-                background: #2b91e3;
-                border-radius: 3px;
-                cursor: pointer;
-                z-index:100;
-            }
+        .btn-txt{
+            position: relative;
+            top:2px;
+            float: right;
+            margin-right: 10px;
+            padding: 0 10px 0 10px;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            background: #2b91e3;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index:100;
         }
         li[rel="item"]:hover .show-export-button {
             display: block;
@@ -211,15 +180,32 @@ var pan_115 = function(cookies) {
                     $("#setting_divtopmsg").html("");
                     self.set_center($("#setting_div"));
                 });
-                function top_panel_box_btn(){
+               function top_panel_box_btn(){
                     var root=document.querySelector("iframe[rel='wangpan']").contentDocument;
-                    $("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
+                    var setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    var main_setting_div=$("<a>").text("插件设置").attr("href","javascript:;");
+                    main_setting_div.attr("id","main_setting_div");
+                    setting_div.appendTo($(root).find(".tup-logout"));
+                    if(!document.querySelector("a[id='main_setting_div']")){
+                        main_setting_div.appendTo($(document.querySelector("div[id='js_main_container']")).find(".tup-logout"));
+                        main_setting_div.on('click',function(){
+                            $("#setting_div").show();
+                            $("#setting_divtopmsg").html("");
+                            self.set_center($("#setting_div"));
+                        });
+                    }
+                    setting_div.on('click',function(){
+                        $("#setting_div").show();
+                        $("#setting_divtopmsg").html("");
+                        self.set_center($("#setting_div"));
+                    });
+                    $(root).find(".file-path").after($("<div>").text("RPC下载").addClass("btn-aria2c").on('click',function(){
                         self.aria2_export(true);
-                    }).appendTo($(root).find("#js_top_panel_box"));
-                    $("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
+                    }));
+                    $(root).find(".file-path").after($("<div>").text("导出下载").addClass("btn-txt").on('click',function(){
                         self.aria2_download();
                         self.aria2_export(false);
-                    }).appendTo($(root).find("#js_top_panel_box"));
+                    }));
                     var style = document.createElement('style');
                     style.setAttribute('type', 'text/css');
                     style.textContent = css;
